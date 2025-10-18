@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Your Name — Portfolio</title>
+  <meta name="description" content="Portfolio of Your Name: education, experience, projects, and blog." />
+  <meta property="og:title" content="Your Name — Portfolio" />
+  <meta property="og:description" content="Education, experience, projects, and blog." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #0f172a;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --link: #7dd3fc;
+      --accent: #22d3ee;
+      --card: #111827;
+      --border: #1f2937;
+      --chip: #0ea5e9;
+      --chip-bg: #0b3a55;
+    }
+    .light {
+      --bg: #ffffff;
+      --panel: #f8fafc;
+      --text: #0f172a;
+      --muted: #475569;
+      --link: #0369a1;
+      --accent: #0891b2;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --chip: #0ea5e9;
+      --chip-bg: #e0f2fe;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg); color: var(--text);
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    header {
+      position: sticky; top: 0; z-index: 30;
+      background: linear-gradient(180deg, var(--bg) 85%, rgba(0,0,0,0));
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(6px);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { font-weight: 800; letter-spacing: .3px; }
+    .nav-links { display: flex; gap: 16px; align-items: center; }
+    .nav a { padding: 10px 12px; border-radius: 10px; }
+    .nav a.active, .nav a:hover { background: var(--panel); text-decoration: none; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1px solid var(--border); background: var(--panel); color: var(--text); border-radius: 12px; cursor: pointer; transition: transform .05s ease; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn.primary { border-color: transparent; background: linear-gradient(135deg, var(--accent), var(--link)); color: #0b1020; font-weight: 700; }
+    .hero { display: grid; grid-template-columns: 1.2fr .8fr; gap: 28px; align-items: center; padding: 40px 0 24px; }
+    .hero-card { background: radial-gradient(1000px 400px at -10% -10%, rgba(34,211,238,.1), transparent), var(--panel); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: 0 10px 35px rgba(0,0,0,.25); }
+    .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+    .kpi { background: var(--card); border: 1px solid var(--border); padding: 14px; border-radius: 14px; text-align: center; }
+    .kpi h3 { margin: 0; font-size: 22px; }
+    .kpi p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+
+    .section { padding: 36px 0; }
+    .section h2 { margin: 0 0 12px; font-size: 24px; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; }
+    .card img { width: 100%; height: 180px; object-fit: cover; background: #111; }
+    .card-content { padding: 14px; }
+    .card-title { font-weight: 700; margin: 0 0 6px; }
+    .card-desc { margin: 0 0 10px; color: var(--muted); }
+    .tag { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 8px 10px; background: var(--chip-bg); color: #e6f6ff; border: 1px solid rgba(125,211,252,.2); border-radius: 999px; }
+
+    .subtle { color: var(--muted); }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip { padding: 8px 12px; border-radius: 999px; background: var(--chip-bg); color: var(--text); border: 1px solid rgba(255,255,255,.08); cursor: pointer; }
+    .chip.active { background: var(--chip); color: white; }
+
+    .footer { border-top: 1px solid var(--border); margin-top: 30px; padding: 20px 0; font-size: 14px; color: var(--muted); }
+
+    /* Blog */
+    .post { background: var(--card); border: 1px solid var(--border); padding: 16px; border-radius: 16px; }
+    .post h3 { margin: 0 0 8px; }
+    .post .meta { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .hero { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+      .nav .brand { font-size: 16px; }
+      .nav a { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">Your Name</div>
+      <nav class="nav-links">
+        <a href="#home" data-nav>Home</a>
+        <a href="#projects" data-nav>Projects</a>
+        <a href="#blog" data-nav>Blog</a>
+        <button id="themeToggle" class="btn" title="Toggle theme" aria-label="Toggle theme">
+          <!-- moon/sun icon -->
+          <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M21.752 15.002a9 9 0 01-12.75-12.75A10 10 0 1021.752 15z"/></svg>
+          <svg id="iconSun" style="display:none" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 18a6 6 0 100-12 6 6 0 000 12zm0-16a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm0 16a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1zM3 11a1 1 0 011-1h2a1 1 0 110 2H4a1 1 0 01-1-1zm16 0a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1zM5.636 5.636a1 1 0 011.414 0L8.1 6.686a1 1 0 01-1.414 1.414L5.636 7.05a1 1 0 010-1.414zm9.9 9.9a1 1 0 011.414 0l1.05 1.05a1 1 0 01-1.414 1.414l-1.05-1.05a1 1 0 010-1.414zm0-9.9l1.05-1.05a1 1 0 111.414 1.414L16.95 7.05A1 1 0 1115.536 5.636zM7.05 16.95a1 1 0 011.414 0l1.05 1.05a1 1 0 11-1.414 1.414l-1.05-1.05a1 1 0 010-1.414z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HOME / LANDING -->
+    <section id="home" class="section">
+      <div class="hero">
+        <div class="hero-card">
+          <h1 style="margin-top:0; font-size: 34px;">Hi, I’m <span style="color: var(--accent);">Your Name</span> 👋</h1>
+          <p class="subtle">Short bio here. I’m a researcher/developer focused on quantum computing, error correction, and kernel methods. I love building clean tools and writing clear explanations.</p>
+          <div class="row" style="margin-top: 14px;">
+            <a class="btn primary" href="assets/cv.pdf" download>Download CV</a>
+            <a class="btn" href="mailto:you@example.com">Contact me</a>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><h3 id="kpiYears">5+</h3><p>Years experience</p></div>
+            <div class="kpi"><h3 id="kpiPubs">10</h3><p>Publications</p></div>
+            <div class="kpi"><h3 id="kpiRepos">25</h3><p>Public repos</p></div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h2 style="margin:0 0 10px;">Education</h2>
+          <ul class="subtle" style="margin-top:0; line-height: 1.6;">
+            <li><strong>Ph.D.</strong> in Quantum Information — University X (2019–2023)</li>
+            <li><strong>M.Sc.</strong> in Physics — University Y (2017–2019)</li>
+            <li><strong>B.Sc.</strong> in Mathematics — University Z (2013–2017)</li>
+          </ul>
+          <h2 style="margin:10px 0;">Experience</h2>
+          <ul class="subtle" style="margin-top:0; line-height: 1.6;">
+            <li><strong>Research Scientist</strong>, Lab/Company A — Quantum Error Correction (2023–present)</li>
+            <li><strong>Graduate Researcher</strong>, Group B — Quantum ML (2019–2023)</li>
+          </ul>
+          <div class="row" style="margin-top: 10px;">
+            <a aria-label="GitHub" class="btn" href="https://github.com/yourhandle" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a aria-label="LinkedIn" class="btn" href="https://www.linkedin.com/in/yourhandle" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a aria-label="Twitter" class="btn" href="https://twitter.com/yourhandle" target="_blank" rel="noopener noreferrer">Twitter</a>
+            <a aria-label="Google Scholar" class="btn" href="https://scholar.google.com/citations?user=XXXXX" target="_blank" rel="noopener noreferrer">Scholar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section" hidden>
+      <div class="row" style="justify-content: space-between; align-items: end;">
+        <div>
+          <h2>Projects</h2>
+          <p class="subtle" style="margin-top:0">Selected projects with code and short descriptions.</p>
+        </div>
+        <div class="chips" id="projectFilters">
+          <!-- dynamically filled -->
+        </div>
+      </div>
+      <div id="projectsGrid" class="grid" aria-live="polite"></div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog" class="section" hidden>
+      <h2>Blog</h2>
+      <p class="subtle" style="margin-top:0">Posts grouped by section (e.g., Quantum Error Correction, Quantum Kernels).</p>
+      <div class="chips" id="blogFilters"></div>
+      <div id="postsList" class="section" style="padding-top: 16px;"></div>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <div>© <span id="year"></span> Your Name. Built with HTML/CSS/JS. Hosted on GitHub Pages.</div>
+  </footer>
+
+  <script>
+    // ---- Content (EDIT THESE) -------------------------------------------------
+    const SITE = {
+      name: "Your Name",
+      email: "you@example.com",
+      socials: {
+        github: "https://github.com/yourhandle",
+        linkedin: "https://www.linkedin.com/in/yourhandle",
+        twitter: "https://twitter.com/yourhandle",
+        scholar: "https://scholar.google.com/citations?user=XXXXX",
+      },
+      stats: { years: "5+", pubs: 10, repos: 25 },
+    };
+
+    const PROJECTS = [
+      {
+        title: "Surface Code Visualizer",
+        desc: "Interactive decoder and syndrome visualizer for the planar surface code.",
+        tags: ["quantum-error-correction", "viz", "typescript"],
+        image: "assets/projects/surface-code.png", // place your image here
+        github: "https://github.com/yourhandle/surface-code-visualizer"
+      },
+      {
+        title: "Quantum Kernel Toolkit",
+        desc: "Reusable kernels + benchmarks for QML experiments.",
+        tags: ["quantum-kernels", "python", "research"],
+        image: "assets/projects/qkernels.png",
+        github: "https://github.com/yourhandle/qkernel-toolkit"
+      },
+      {
+        title: "Noise Channel Sandbox",
+        desc: "Playground to compose Pauli/Lindblad noise channels and simulate.",
+        tags: ["simulation", "python", "qml"],
+        image: "assets/projects/noise-sandbox.png",
+        github: "https://github.com/yourhandle/noise-sandbox"
+      },
+    ];
+
+    const POSTS = [
+      {
+        title: "Stabilizers 101",
+        date: "2025-06-01",
+        section: "Quantum Error Correction",
+        summary: "A gentle primer on stabilizer formalism and measuring syndromes.",
+        url: "blog/stabilizers-101.html",
+        tags: ["qec", "stabilizers"]
+      },
+      {
+        title: "What Makes a Good Quantum Kernel?",
+        date: "2025-04-10",
+        section: "Quantum Kernels",
+        summary: "Bias-variance trade-offs, feature maps, and expressivity.",
+        url: "blog/good-quantum-kernel.html",
+        tags: ["kernels", "qml"]
+      },
+      {
+        title: "Mitigating Readout Errors",
+        date: "2024-12-02",
+        section: "Quantum Error Correction",
+        summary: "Quick tips and tricks for readout error mitigation in practice.",
+        url: "blog/readout-mitigation.html",
+        tags: ["qec", "mitigation"]
+      },
+    ];
+
+    // ---- Router (hash-based) --------------------------------------------------
+    function route() {
+      const hash = window.location.hash || "#home";
+      document.querySelectorAll('a[data-nav]').forEach(a => a.classList.remove('active'));
+      const activeLink = document.querySelector(`a[href="${hash}"]`);
+      if (activeLink) activeLink.classList.add('active');
+
+      ["home","projects","blog"].forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.hidden = ("#" + id) !== hash;
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    window.addEventListener('hashchange', route);
+
+    // ---- Theme toggle ---------------------------------------------------------
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    function loadTheme() {
+      const saved = localStorage.getItem('theme');
+      const light = saved ? saved === 'light' : prefersLight;
+      document.documentElement.classList.toggle('light', light);
+      document.getElementById('iconSun').style.display = light ? 'block' : 'none';
+      document.getElementById('iconMoon').style.display = light ? 'none' : 'block';
+    }
+    function toggleTheme() {
+      const isLight = document.documentElement.classList.toggle('light');
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+      loadTheme();
+    }
+    document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+    // ---- Populate content -----------------------------------------------------
+    function setupHome() {
+      document.title = `${SITE.name} — Portfolio`;
+      document.querySelector('.brand').textContent = SITE.name;
+      document.getElementById('year').textContent = new Date().getFullYear();
+      document.getElementById('kpiYears').textContent = SITE.stats.years;
+      document.getElementById('kpiPubs').textContent = SITE.stats.pubs;
+      document.getElementById('kpiRepos').textContent = SITE.stats.repos;
+    }
+
+    // ---- Projects rendering + filters ----------------------------------------
+    function renderProjectFilters(projects) {
+      const set = new Set(["All", ...projects.flatMap(p => p.tags)]);
+      const container = document.getElementById('projectFilters');
+      container.innerHTML = '';
+      set.forEach(tag => {
+        const b = document.createElement('button');
+        b.className = 'chip' + (tag === 'All' ? ' active' : '');
+        b.textContent = tag;
+        b.addEventListener('click', () => {
+          container.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          b.classList.add('active');
+          renderProjects(tag === 'All' ? projects : projects.filter(p => p.tags.includes(tag)));
+        });
+        container.appendChild(b);
+      });
+    }
+
+    function renderProjects(list) {
+      const grid = document.getElementById('projectsGrid');
+      grid.innerHTML = '';
+      list.forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        const img = document.createElement('img');
+        img.src = p.image;
+        img.alt = p.title + ' screenshot';
+        img.loading = 'lazy';
+        card.appendChild(img);
+        const content = document.createElement('div');
+        content.className = 'card-content';
+        content.innerHTML = `<h3 class="card-title">${p.title}</h3>
+          <p class="card-desc">${p.desc}</p>`;
+        const row = document.createElement('div');
+        row.className = 'row';
+        p.tags.slice(0,3).forEach(t => {
+          const span = document.createElement('span');
+          span.className = 'tag';
+          span.textContent = t;
+          row.appendChild(span);
+        });
+        const link = document.createElement('a');
+        link.href = p.github; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        link.className = 'btn'; link.style.marginLeft = 'auto';
+        link.textContent = 'View on GitHub';
+        row.appendChild(link);
+        content.appendChild(row);
+        card.appendChild(content);
+        grid.appendChild(card);
+      });
+    }
+
+    // ---- Blog rendering + filters --------------------------------------------
+    function renderBlogFilters(posts) {
+      const set = new Set(["All", ...posts.map(p => p.section)]);
+      const container = document.getElementById('blogFilters');
+      container.innerHTML = '';
+      set.forEach(sec => {
+        const b = document.createElement('button');
+        b.className = 'chip' + (sec === 'All' ? ' active' : '');
+        b.textContent = sec;
+        b.addEventListener('click', () => {
+          container.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+          b.classList.add('active');
+          renderPosts(sec === 'All' ? posts : posts.filter(p => p.section === sec));
+        });
+        container.appendChild(b);
+      });
+    }
+
+    function renderPosts(list) {
+      const container = document.getElementById('postsList');
+      container.innerHTML = '';
+      // Group by section
+      const groups = {};
+      list.forEach(p => { (groups[p.section] ||= []).push(p); });
+      Object.keys(groups).sort().forEach(section => {
+        const h = document.createElement('h3');
+        h.textContent = section;
+        h.style.marginBottom = '10px';
+        container.appendChild(h);
+        const col = document.createElement('div');
+        col.className = 'grid';
+        col.style.gridTemplateColumns = 'repeat(2, 1fr)';
+        groups[section]
+          .sort((a,b) => new Date(b.date) - new Date(a.date))
+          .forEach(p => {
+            const post = document.createElement('article');
+            post.className = 'post';
+            post.innerHTML = `<h3><a href="${p.url}">${p.title}</a></h3>
+              <div class="meta">${new Date(p.date).toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'})}
+                • ${p.tags.map(t=>`#${t}`).join(' ')}</div>
+              <p class="subtle">${p.summary}</p>
+              <div class="row"> <a class="btn" href="${p.url}">Read post</a> </div>`;
+            col.appendChild(post);
+          });
+        container.appendChild(col);
+        const spacer = document.createElement('div'); spacer.style.height = '8px';
+        container.appendChild(spacer);
+      });
+    }
+
+    // ---- Init ----------------------------------------------------------------
+    function init() {
+      loadTheme();
+      setupHome();
+      route();
+      renderProjectFilters(PROJECTS);
+      renderProjects(PROJECTS);
+      renderBlogFilters(POSTS);
+      renderPosts(POSTS);
+      // Make external social buttons match SITE (optional: if you want icons, replace with SVGs)
+      const [gh, li, tw, sc] = document.querySelectorAll('.hero-card .row .btn');
+      if (gh) gh.href = SITE.socials.github;
+      if (li) li.href = SITE.socials.linkedin;
+      if (tw) tw.href = SITE.socials.twitter;
+      if (sc) sc.href = SITE.socials.scholar;
+      // CV button
+      const cv = document.querySelector('a[href="assets/cv.pdf"]');
+      if (cv) cv.href = 'assets/cv.pdf';
+    }
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+  <!--
+  ===================== HOW TO DEPLOY ON GITHUB PAGES =====================
+  1) Create repo named: yourhandle.github.io (or any repo + enable Pages).
+  2) Add this file as index.html at repo root. Create folders:
+       /assets/cv.pdf (your CV)
+       /assets/projects/*.png (project images)
+       /blog/*.html         (your posts)
+  3) Commit + push. In repo Settings → Pages, set Source to "Deploy from a branch",
+     choose branch: main, folder: / (root). Save.
+  4) Your site will be live at https://yourhandle.github.io
+
+  ======================= ADDING BLOG POSTS ===============================
+  - Create a simple HTML file in /blog/ (e.g., stabilizers-101.html).
+  - Then add an entry in POSTS[] above with title, date, section, url, summary.
+
+  ======================== CUSTOMIZATION TIPS =============================
+  - Replace colors in :root above to match your branding.
+  - Edit text in the HOME section and the SITE/PROJECTS/POSTS arrays.
+  - Add your icons or profile photo by inserting an <img> in the hero.
+  - This is a single-page app with hash routing (#home, #projects, #blog), so it
+    works great on GitHub Pages with no build step.
+  - Optional: add a CNAME file at repo root to use a custom domain.
+  -->
+</body>
+</html>
